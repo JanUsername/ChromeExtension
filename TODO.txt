@@ -1,0 +1,10 @@
+GUID/UUID -> random number
+
+writing down: 
+
+timestamp
+URL
+
+-as json object
+
+-severtime tab is changed

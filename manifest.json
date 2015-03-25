@@ -1,0 +1,26 @@
+{
+  "manifest_version": 2,
+
+  "name": "Squirrel",
+  "description": "This extension will check what tabs you are using for aiding your coding",
+  "version": "1.0",
+  "minimum_chrome_version": "23",
+
+  "browser_action": {
+    "default_icon": "Squirrel.png",
+    "default_popup": "popup.html"
+  },
+  
+  "background": {
+    "scripts": ["popup.js"],
+	"persistent": false
+  },
+  
+  "permissions": [
+	"tabs",
+	"activeTab",
+	"fileSystem" ,
+	{"fileSystem": ["write"]} ,
+	{"fileSystem": ["write", "retainEntries", "directory"]} 
+	]
+}
