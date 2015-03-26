@@ -19,26 +19,22 @@
     });
 }
 
-chrome.tabs.onUpdated.addListener(function(tabId, changeInfo, tab) {
-   alert(changeInfo.url);
-    
 
+chrome.tabs.onUpdated.addListener(function (tabId, changeInfo, tab)  {
+	uuid = createGuid();
+	url = changeInfo.url;
+	timestampActiveTab = Date.now();
+	//outputString = '{"url": url,"timestamp": timestampActiveTab,"uuid": uuid}';
+   //console.log("this is a live update  " + changeInfo.url);
+   if(!(url.indexOf("undefined") > -1) &&  !(url.indexOf("newtab") > -1)){
+	   alert(url +" " + uuid + " " +  timestampActiveTab);
+	   }
 }); 
  
-chrome.tabs.query({'active': true, 'lastFocusedWindow': true}, function (tabs) {
-    url = tabs[0].url;
-	timestampActiveTab = Date.now();
-	uuid = createGuid();
-	console.log("URL: " + url +  " timestamp: " + timestampActiveTab + " UUID: " + uuid);
-	outputString = '{"url": url,"timestamp": timestampActiveTab,"uuid": uuid}';
-	//var outputObj = JSON.parse(outputString); does not work with variables
-	//writeToJSONFile();
-
-});
-
  /**
  * write the date, guid and timestamp to json file with chrome fileSystem
  **/
+ 
 chrome.fileSystem.chooseEntry({type: 'saveFile',suggestedName: 'myfile.html'}, 
 	function(writableFileEntry) {
 		writableFileEntry.createWriter(function(writer) {
