@@ -35,8 +35,7 @@ chrome.tabs.onUpdated.addListener(function (tabId, changeInfo, tab)  {
  * write the date, guid and timestamp to json file with chrome fileSystem
  **/
  
-chrome.fileSystem.chooseEntry({type: 'saveFile',suggestedName: 'myfile.html'}, 
-	function(writableFileEntry) {
+chrome.fileSystem.chooseEntry(function (type: "saveFile") {
 		writableFileEntry.createWriter(function(writer) {
 		writer.onwriteend = function(e) {
 		$("#OuptutText").html("Save complete!");
