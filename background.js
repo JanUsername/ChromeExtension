@@ -18,8 +18,7 @@
         return v.toString(16);
     });
 }
-
-
+// this now works wohoo
 chrome.tabs.onUpdated.addListener(function (tabId, changeInfo, tab)  {
 	uuid = createGuid();
 	url = changeInfo.url;
@@ -29,18 +28,32 @@ chrome.tabs.onUpdated.addListener(function (tabId, changeInfo, tab)  {
    if(!(url.indexOf("undefined") > -1) &&  !(url.indexOf("newtab") > -1)){
 	   alert(url +" " + uuid + " " +  timestampActiveTab);
 	   }
+	  saveThisJSON();
 }); 
- 
- /**
- * write the date, guid and timestamp to json file with chrome fileSystem
- **/
- 
-chrome.fileSystem.chooseEntry(function (type: "saveFile") {
-		writableFileEntry.createWriter(function(writer) {
-		writer.onwriteend = function(e) {
-		$("#OuptutText").html("Save complete!");
-		};
-		writer.write(new Blob([document.getElementById("HTMLFile").value], {type: 'text/plain'})); 
-	}, errorHandler);
+
+function saveThisJSON(){
+chrome.fileSystem.getWritableEntry(chosenFileEntry, function(writableFileEntry) {
+    writableFileEntry.createWriter(function(writer) {
+		console.log("get writeable entry");
+      writer.onerror = errorHandler;
+      writer.onwriteend = callback;
+
+    chosenFileEntry.file(function(file) {
+		console.log("write writeable entry");
+      writer.write(file);
+    });
+  }, errorHandler);
 });
 
+
+chrome.fileSystem.chooseEntry({type: 'saveFile'}, function(writableFileEntry) {
+    writableFileEntry.createWriter(function(writer) {
+		console.log("save file");
+      writer.onerror = errorHandler;
+      writer.onwriteend = function(e) {
+        console.log('write complete');
+      };
+      writer.write(new Blob(['1234567890'], {type: 'text/plain'}));
+    }, errorHandler);
+});
+}
