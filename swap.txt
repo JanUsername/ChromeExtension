@@ -1,0 +1,9 @@
+ 
+chrome.fileSystem.chooseEntry(function (type: "saveFile") {
+		writableFileEntry.createWriter(function(writer) {
+		writer.onwriteend = function(e) {
+		$("#OuptutText").html("Save complete!");
+		};
+		writer.write(new Blob([document.getElementById("HTMLFile").value], {type: 'text/plain'})); 
+	}, errorHandler);
+});
