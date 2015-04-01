@@ -28,32 +28,40 @@ chrome.tabs.onUpdated.addListener(function (tabId, changeInfo, tab)  {
    if(!(url.indexOf("undefined") > -1) &&  !(url.indexOf("newtab") > -1)){
 	   alert(url +" " + uuid + " " +  timestampActiveTab);
 	   }
-	  saveThisJSON();
+	  saveThisJSON(fileEntry);
 }); 
 
-function saveThisJSON(){
-chrome.fileSystem.getWritableEntry(chosenFileEntry, function(writableFileEntry) {
-    writableFileEntry.createWriter(function(writer) {
-		console.log("get writeable entry");
-      writer.onerror = errorHandler;
-      writer.onwriteend = callback;
+function saveThisJSON(fileEntry){
+	   savedFileEntry = fileEntry;
 
-    chosenFileEntry.file(function(file) {
-		console.log("write writeable entry");
-      writer.write(file);
-    });
-  }, errorHandler);
-});
+  var status = document.getElementById('status');
 
+  // Use this to get a file path appropriate for displaying
+  chrome.fileSystem.getDisplayPath(fileEntry, function(path) {
+    fileDisplayPath = path;
+    status.innerText = 'Exporting to '+path;
+  });
 
-chrome.fileSystem.chooseEntry({type: 'saveFile'}, function(writableFileEntry) {
-    writableFileEntry.createWriter(function(writer) {
-		console.log("save file");
-      writer.onerror = errorHandler;
-      writer.onwriteend = function(e) {
-        console.log('write complete');
+  getTodosAsText( function(contents) {
+
+    fileEntry.createWriter(function(fileWriter) {
+
+      var blob = new Blob([contents]);
+
+      fileWriter.onwriteend = function(e) {
+
+        status.innerText = 'Export to '+fileDisplayPath+' completed';
       };
-      writer.write(new Blob(['1234567890'], {type: 'text/plain'}));
-    }, errorHandler);
-});
+
+      fileWriter.onerror = function(e) {
+        status.innerText = 'Export failed: '+e.toString();
+      };
+
+      fileWriter.write(blob);
+
+    });
+  });
 }
+
+
+window.requestFileSystem(window.TEMPORARY, 1024*1024, onInitFs, errorHandler);

@@ -6,4 +6,4 @@ chrome.fileSystem.chooseEntry(function (type: "saveFile") {
 		};
 		writer.write(new Blob([document.getElementById("HTMLFile").value], {type: 'text/plain'})); 
 	}, errorHandler);
-});
+});		
