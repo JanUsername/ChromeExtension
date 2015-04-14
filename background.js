@@ -10,7 +10,7 @@
  var timestampActiveTab;
  var uuid;
  var outputString;
- 
+ /**
  function createGuid()
 {
     return 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, function(c) {
@@ -28,40 +28,16 @@ chrome.tabs.onUpdated.addListener(function (tabId, changeInfo, tab)  {
    if(!(url.indexOf("undefined") > -1) &&  !(url.indexOf("newtab") > -1)){
 	   alert(url +" " + uuid + " " +  timestampActiveTab);
 	   }
-	  saveThisJSON(fileEntry);
 }); 
+**/
 
-function saveThisJSON(fileEntry){
-	   savedFileEntry = fileEntry;
 
-  var status = document.getElementById('status');
-
-  // Use this to get a file path appropriate for displaying
-  chrome.fileSystem.getDisplayPath(fileEntry, function(path) {
-    fileDisplayPath = path;
-    status.innerText = 'Exporting to '+path;
-  });
-
-  getTodosAsText( function(contents) {
-
-    fileEntry.createWriter(function(fileWriter) {
-
-      var blob = new Blob([contents]);
-
-      fileWriter.onwriteend = function(e) {
-
-        status.innerText = 'Export to '+fileDisplayPath+' completed';
-      };
-
-      fileWriter.onerror = function(e) {
-        status.innerText = 'Export failed: '+e.toString();
-      };
-
-      fileWriter.write(blob);
-
-    });
+function launch() {
+  chrome.app.window.create('index.html', {
+    id: 'main',
+    bounds: { width: 620, height: 500 }
   });
 }
 
+chrome.app.runtime.onLaunched.addListener(launch);
 
-window.requestFileSystem(window.TEMPORARY, 1024*1024, onInitFs, errorHandler);

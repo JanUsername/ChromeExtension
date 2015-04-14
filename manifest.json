@@ -7,12 +7,11 @@
   "minimum_chrome_version": "23",
 
   "browser_action": {
-    "default_icon": "Squirrel.png",
-    "default_popup": "popup.html"
+    "default_icon": "Squirrel.png"
   },
   
   "background": {
-	"scripts": ["background.js"],
+	"scripts": ["saveJson.js"],
 	"persistent": false
   },
   
