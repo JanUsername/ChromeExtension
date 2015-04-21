@@ -9,17 +9,20 @@
   "browser_action": {
     "default_icon": "Squirrel.png"
   },
-  
-  "background": {
-	"scripts": ["saveJson.js"],
-	"persistent": false
-  },
+
+	"background": {
+		"scripts": ["saveJson.js"],
+		"persistent": false
+	},
   
   "permissions": [
 	"tabs",
 	"activeTab",
 	"fileSystem" ,
 	{"fileSystem": ["write"]} ,
-	{"fileSystem": ["write", "retainEntries", "directory"]} 
+	{"fileSystem": ["write", "retainEntries", "directory"]} ,
+	 "webRequest",
+          "*localhost*/"
+        
 	]
 }
