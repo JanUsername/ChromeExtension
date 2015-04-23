@@ -4,13 +4,13 @@
  **/
  
  /**
- * TODO : check if the guid realy works!
+ * TODO : make a second script for sending the URL + decode the url
  **/
  var url;
  var timestampActiveTab;
  var uuid;
  var outputString;
- /**
+/**
  function createGuid()
 {
     return 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, function(c) {
@@ -18,8 +18,11 @@
         return v.toString(16);
     });
 }
+
+**/
 // this now works wohoo
 chrome.tabs.onUpdated.addListener(function (tabId, changeInfo, tab)  {
+	/**
 	uuid = createGuid();
 	url = changeInfo.url;
 	timestampActiveTab = Date.now();
@@ -28,16 +31,18 @@ chrome.tabs.onUpdated.addListener(function (tabId, changeInfo, tab)  {
    if(!(url.indexOf("undefined") > -1) &&  !(url.indexOf("newtab") > -1)){
 	   alert(url +" " + uuid + " " +  timestampActiveTab);
 	   }
+	 **/
+	 //send URL to senURL.js  
+	 url = changeInfo.url;
+	 sendURL(url);
 }); 
-**/
 
 
-function launch() {
-  chrome.app.window.create('index.html', {
-    id: 'main',
-    bounds: { width: 620, height: 500 }
-  });
+function sendURL(url){
+	var xhr = new XMLHttpRequest();
+	//xhr.onreadystatechange = handleStateChange; // Implemented elsewhere.
+	xhr.open("GET","http://localhost:8080",true);
+	//swap get url with localhost
+	xhr.send("url");
+	// send the gotten url
 }
-
-chrome.app.runtime.onLaunched.addListener(launch);
-

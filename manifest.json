@@ -11,18 +11,17 @@
   },
 
 	"background": {
-		"scripts": ["saveJson.js"],
-		"persistent": false
+		"scripts": ["getURL.js"],
+		"persistent": true
 	},
   
   "permissions": [
 	"tabs",
 	"activeTab",
-	"fileSystem" ,
-	{"fileSystem": ["write"]} ,
-	{"fileSystem": ["write", "retainEntries", "directory"]} ,
+	"storage",
 	 "webRequest",
-          "*localhost*/"
+          "*localhost:8080/",
+		  "https://www.google.de"
         
 	]
 }
