@@ -7,14 +7,15 @@
 
  //(function() {
  
-chrome.tabs.onUpdated.addListener(function (tabId, changeInfo, tab)  {
-	sendURL();
-});
+sendURL();
+
+	
 
 function sendURL(){
-var xhr = new XMLHttpRequest();
-xhr.onreadystatechange = handleStateChange; // Implemented elsewhere.
-xhr.open("GET", chrome.extension.getURL('/config_resources/config.json'), true);
-//swap get url with localhost
-xhr.send();;
+	var xhr = new XMLHttpRequest();
+	//xhr.onreadystatechange = handleStateChange; // Implemented elsewhere.
+	xhr.open("GET", chrome.extension.getURL('/config_resources/config.json'), true);
+	//swap get url with localhost
+	xhr.send();
+	// send the gotten url
 }
