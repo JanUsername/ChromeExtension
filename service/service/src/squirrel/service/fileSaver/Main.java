@@ -12,12 +12,7 @@ import java.util.UUID;
 import java.util.concurrent.Executor;
 import java.util.concurrent.Executors;
 
-import jdk.nashorn.internal.ir.debug.JSONWriter;
-
 public class Main {
-
-	// TODO jackson for json export || gson
-	// GUID create + timestamp in json
 
 	private static final int numberOfThreads = 100;
 	private static final int port = 8195;

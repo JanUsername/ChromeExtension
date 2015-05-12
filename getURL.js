@@ -6,18 +6,17 @@
  /**
  * TODO : make a second script for sending the URL + decode the url
  **/
- var url;
+ var url = "";
  var local = "http:localhost:8195";
 
 chrome.tabs.onUpdated.addListener(function (tabId, changeInfo, tab)  {
-	
-		 url = changeInfo.url;
+	if(changeInfo.status == "loading") {
+		url = changeInfo.url;
 
-   if(!(url.indexOf("undefined") > -1) &&  !(url.indexOf("newtab") > -1)){
-	  
-	 sendURL(url);
-	  }
-
+		if(!(url.indexOf("undefined") != -1) &&  !(url.indexOf("newtab") != -1)){
+			sendURL(url);
+		}
+	}
 
 }); 
 
@@ -33,6 +32,5 @@ function sendURL(url){
 
 function fixedEncodeURIComponent(url){
 	var tmp = url;
-	console.log("just encoded: " + encodeURIComponent(tmp));
      return encodeURIComponent(url).replace(/[!'()]/g, escape).replace(/\*/g, "%2A");
 }
