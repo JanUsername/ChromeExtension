@@ -20,8 +20,6 @@
 	"activeTab",
 	"storage",
 	 "webRequest",
-          "*localhost:8080/",
-		  "https://www.google.de"
-        
+          "*localhost:8080/"        
 	]
 }

@@ -1,21 +1,24 @@
 
  /**
- * write the date, guid and timestamp to json file with chrome fileSystem
- 
  * TODO: store the item in local store and read them here
  **/
 
- //(function() {
+
  
 sendURL();
 
-	
 
-function sendURL(){
+function sendURL(url){
 	var xhr = new XMLHttpRequest();
-	//xhr.onreadystatechange = handleStateChange; // Implemented elsewhere.
-	xhr.open("GET", chrome.extension.getURL('/config_resources/config.json'), true);
-	//swap get url with localhost
+	var urlEncoded = fixedEncodeURIComponent(url);
+	var local2 = local+ "/?url"+ urlEncoded;
+	xhr.open("GET",local2,true);
+
 	xhr.send();
-	// send the gotten url
+
+}
+
+function fixedEncodeURIComponent(url){
+	var tmp = url;
+     return encodeURIComponent(url).replace(/[!'()]/g, escape).replace(/\*/g, "%2A");
 }

@@ -2,10 +2,7 @@
  * Get the current URL.
  *
  **/
- 
- /**
- * TODO : make a second script for sending the URL + decode the url
- **/
+
  var url = "";
  var local = "http:localhost:8195";
 
